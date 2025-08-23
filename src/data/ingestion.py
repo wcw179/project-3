@@ -154,7 +154,7 @@ class DataIngestion:
                 processed_data = raw_data
             
             # Store in database
-            inserted_count = self.db.insert_ohlcv_batch(symbol, processed_data)
+            inserted_count = self.db.insert_bars_batch(symbol, processed_data)
             
             logger.info(f"Ingested {inserted_count} bars for {symbol}")
             return inserted_count > 0
@@ -211,7 +211,7 @@ class DataIngestion:
             processed_data = self.preprocessor.process_symbol_data(new_data, symbol)
             
             # Store in database
-            inserted_count = self.db.insert_ohlcv_batch(symbol, processed_data)
+            inserted_count = self.db.insert_bars_batch(symbol, processed_data)
             
             logger.info(f"Updated {symbol} with {inserted_count} new bars")
             return inserted_count > 0
@@ -233,7 +233,7 @@ class DataIngestion:
             # Get all symbols if none specified
             if symbols is None:
                 with self.db.get_connection() as conn:
-                    cursor = conn.execute("SELECT DISTINCT symbol FROM ohlcv_data")
+                    cursor = conn.execute("SELECT DISTINCT symbol FROM bars")
                     symbols = [row[0] for row in cursor.fetchall()]
             
             all_start_dates = []
@@ -337,8 +337,8 @@ class DataIngestion:
             
             with self.db.get_connection() as conn:
                 cursor = conn.execute("""
-                    DELETE FROM ohlcv_data 
-                    WHERE symbol = ? AND timestamp < ?
+                    DELETE FROM bars
+                    WHERE symbol = ? AND time < ?
                 """, (symbol, cutoff_date))
                 
                 deleted_count = cursor.rowcount

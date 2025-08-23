@@ -137,24 +137,7 @@ class M5TradingBot:
 
         return successful > 0
 
-    def generate_features(self, symbols: Optional[List[str]] = None,
-                         start_date: Optional[str] = None, end_date: Optional[str] = None) -> bool:
-        """Generate features for symbols"""
-        logger.info("Starting feature generation...")
 
-        symbols = symbols or self.config["symbols"]
-        start_date = start_date or self.config["data"]["start_date"]
-        end_date = end_date or self.config["data"]["end_date"]
-
-        start_dt = datetime.strptime(start_date, "%Y-%m-%d")
-        end_dt = datetime.strptime(end_date, "%Y-%m-%d")
-
-        results = self.feature_pipeline.batch_process_symbols(symbols, start_dt, end_dt)
-
-        successful = sum(1 for r in results.values() if r.get('status') == 'success')
-        logger.info(f"Feature generation completed: {successful}/{len(symbols)} symbols successful")
-
-        return successful > 0
 
     def train_models(self, symbols: Optional[List[str]] = None,
                     start_date: Optional[str] = None, end_date: Optional[str] = None,
@@ -294,7 +277,7 @@ def main():
     """Main entry point"""
     parser = argparse.ArgumentParser(description="M5 Multi-Symbol Trend Bot")
     parser.add_argument("command", choices=[
-        "ingest", "features", "train", "backtest", "live", "status"
+        "ingest", "train", "backtest", "live", "status"
     ], help="Command to execute")
     parser.add_argument("--symbols", nargs="+", help="Symbols to process")
     parser.add_argument("--start-date", help="Start date (YYYY-MM-DD)")
@@ -311,9 +294,7 @@ def main():
             success = bot.ingest_data(args.symbols, args.start_date, args.end_date)
             print(f"Data ingestion {'successful' if success else 'failed'}")
 
-        elif args.command == "features":
-            success = bot.generate_features(args.symbols, args.start_date, args.end_date)
-            print(f"Feature generation {'successful' if success else 'failed'}")
+
 
         elif args.command == "train":
             results = bot.train_models(args.symbols, args.start_date, args.end_date)

@@ -31,21 +31,17 @@ class TradingDatabase:
     def init_database(self):
         """Initialize database schema"""
         with self.get_connection() as conn:
-            # OHLCV data table
+            # Bars table (standardized schema)
             conn.execute("""
-                CREATE TABLE IF NOT EXISTS ohlcv_data (
-                    id INTEGER PRIMARY KEY AUTOINCREMENT,
+                CREATE TABLE IF NOT EXISTS bars (
                     symbol TEXT NOT NULL,
-                    timestamp DATETIME NOT NULL,
+                    time DATETIME NOT NULL,
                     open REAL NOT NULL,
                     high REAL NOT NULL,
                     low REAL NOT NULL,
                     close REAL NOT NULL,
-                    volume REAL NOT NULL,
-                    tick_volume INTEGER,
-                    spread INTEGER,
-                    created_at DATETIME DEFAULT CURRENT_TIMESTAMP,
-                    UNIQUE(symbol, timestamp)
+                    volume REAL NOT NULL DEFAULT 0,
+                    PRIMARY KEY(symbol, time)
                 )
             """)
 
@@ -54,11 +50,11 @@ class TradingDatabase:
                 CREATE TABLE IF NOT EXISTS features (
                     id INTEGER PRIMARY KEY AUTOINCREMENT,
                     symbol TEXT NOT NULL,
-                    timestamp DATETIME NOT NULL,
+                    time DATETIME NOT NULL,
                     feature_set TEXT NOT NULL,  -- 'lstm' or 'xgb'
                     features TEXT NOT NULL,     -- JSON serialized features
                     created_at DATETIME DEFAULT CURRENT_TIMESTAMP,
-                    UNIQUE(symbol, timestamp, feature_set)
+                    UNIQUE(symbol, time, feature_set)
                 )
             """)
 
@@ -67,14 +63,14 @@ class TradingDatabase:
                 CREATE TABLE IF NOT EXISTS labels (
                     id INTEGER PRIMARY KEY AUTOINCREMENT,
                     symbol TEXT NOT NULL,
-                    timestamp DATETIME NOT NULL,
+                    time DATETIME NOT NULL,
                     label_type TEXT NOT NULL,   -- 'y_base' or 'y_meta'
                     rr_preset TEXT NOT NULL,    -- '1:2', '1:3', '1:4'
                     label_value INTEGER NOT NULL,
                     barrier_meta TEXT,          -- JSON with barrier info
                     sample_weight REAL,
                     created_at DATETIME DEFAULT CURRENT_TIMESTAMP,
-                    UNIQUE(symbol, timestamp, label_type, rr_preset)
+                    UNIQUE(symbol, time, label_type, rr_preset)
                 )
             """)
 
@@ -124,73 +120,70 @@ class TradingDatabase:
             """)
 
             # Create indexes for performance
-            conn.execute("CREATE INDEX IF NOT EXISTS idx_ohlcv_symbol_timestamp ON ohlcv_data(symbol, timestamp)")
-            conn.execute("CREATE INDEX IF NOT EXISTS idx_features_symbol_timestamp ON features(symbol, timestamp)")
-            conn.execute("CREATE INDEX IF NOT EXISTS idx_labels_symbol_timestamp ON labels(symbol, timestamp)")
+            conn.execute("CREATE INDEX IF NOT EXISTS idx_bars_symbol_time ON bars(symbol, time)")
+            conn.execute("CREATE INDEX IF NOT EXISTS idx_features_symbol_time ON features(symbol, time)")
+            conn.execute("CREATE INDEX IF NOT EXISTS idx_labels_symbol_time ON labels(symbol, time)")
 
             conn.commit()
             logger.info("Database initialized successfully")
 
-    def insert_ohlcv_batch(self, symbol: str, df: pd.DataFrame) -> int:
-        """Insert OHLCV data in batch"""
-        with self.get_connection() as conn:
-            # Prepare data
-            df_copy = df.copy()
-            df_copy['symbol'] = symbol
-            df_copy = df_copy.reset_index()  # Ensure timestamp is a column
+    def insert_bars_batch(self, symbol: str, df: pd.DataFrame) -> int:
+        """Insert OHLCV rows into bars. Expects df indexed by timestamp with columns open,high,low,close,volume"""
+        if df.empty:
+            return 0
+        df_copy = df.copy()
+        df_copy = df_copy.reset_index()
+        # Ensure column name is 'time'
+        if 'timestamp' in df_copy.columns:
+            df_copy.rename(columns={'timestamp': 'time'}, inplace=True)
+        elif 'index' in df_copy.columns:
+            df_copy.rename(columns={'index': 'time'}, inplace=True)
 
-            # Insert data
-            inserted = 0
+        inserted = 0
+        with self.get_connection() as conn:
             for _, row in df_copy.iterrows():
                 try:
-                    conn.execute("""
-                        INSERT OR IGNORE INTO ohlcv_data
-                        (symbol, timestamp, open, high, low, close, volume, tick_volume, spread)
-                        VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?)
-                    """, (
-                        row['symbol'], row.name if hasattr(row, 'name') else row['timestamp'],
-                        row['open'], row['high'], row['low'], row['close'], row['volume'],
-                        row.get('tick_volume'), row.get('spread')
-                    ))
+                    conn.execute(
+                        """INSERT OR REPLACE INTO bars (symbol, time, open, high, low, close, volume)
+                           VALUES (?, ?, ?, ?, ?, ?, ?)""",
+                        (
+                            symbol, row['time'], float(row['open']), float(row['high']),
+                            float(row['low']), float(row['close']), float(row.get('volume', 0.0))
+                        )
+                    )
                     inserted += 1
                 except Exception as e:
-                    logger.warning(f"Failed to insert row for {symbol}: {e}")
-
+                    logger.warning(f"Failed to insert bar for {symbol}: {e}")
             conn.commit()
-            return inserted
+        return inserted
 
     def get_ohlcv_data(self, symbol: str, start_date: Optional[datetime] = None,
                        end_date: Optional[datetime] = None) -> pd.DataFrame:
-        """Retrieve OHLCV data for a symbol"""
-        query = "SELECT * FROM ohlcv_data WHERE symbol = ?"
-        params = [symbol]
-
+        """Retrieve OHLCV data from bars table and return with index 'timestamp'"""
+        query = "SELECT * FROM bars WHERE symbol = ?"
+        params: List[Any] = [symbol]
         if start_date:
-            query += " AND timestamp >= ?"
-            params.append(start_date)
-
+            query += " AND time >= ?"; params.append(start_date)
         if end_date:
-            query += " AND timestamp <= ?"
-            params.append(end_date)
-
-        query += " ORDER BY timestamp"
-
+            query += " AND time <= ?"; params.append(end_date)
+        query += " ORDER BY time"
         with self.get_connection() as conn:
-            df = pd.read_sql_query(query, conn, params=params, parse_dates=['timestamp'])
-            if not df.empty:
-                df.set_index('timestamp', inplace=True)
+            df = pd.read_sql_query(query, conn, params=params, parse_dates=['time'])
+        if df.empty:
+            return df
+        df.rename(columns={'time': 'timestamp'}, inplace=True)
+        df.set_index('timestamp', inplace=True)
+        return df[['open', 'high', 'low', 'close', 'volume']]
 
-        return df
-
-    def insert_features(self, symbol: str, timestamp: datetime, feature_set: str, features: Dict) -> bool:
+    def insert_features(self, symbol: str, time: datetime, feature_set: str, features: Dict) -> bool:
         """Insert feature vector"""
         with self.get_connection() as conn:
             try:
                 conn.execute("""
                     INSERT OR REPLACE INTO features
-                    (symbol, timestamp, feature_set, features)
+                    (symbol, time, feature_set, features)
                     VALUES (?, ?, ?, ?)
-                """, (symbol, timestamp, feature_set, json.dumps(features)))
+                """, (symbol, time, feature_set, json.dumps(features)))
                 conn.commit()
                 return True
             except Exception as e:
@@ -201,38 +194,39 @@ class TradingDatabase:
                      end_date: Optional[datetime] = None) -> pd.DataFrame:
         """Retrieve features for a symbol"""
         query = "SELECT * FROM features WHERE symbol = ? AND feature_set = ?"
-        params = [symbol, feature_set]
+        params: List[Any] = [symbol, feature_set]
 
         if start_date:
-            query += " AND timestamp >= ?"
+            query += " AND time >= ?"
             params.append(start_date)
 
         if end_date:
-            query += " AND timestamp <= ?"
+            query += " AND time <= ?"
             params.append(end_date)
 
-        query += " ORDER BY timestamp"
+        query += " ORDER BY time"
 
         with self.get_connection() as conn:
-            df = pd.read_sql_query(query, conn, params=params, parse_dates=['timestamp'])
+            df = pd.read_sql_query(query, conn, params=params, parse_dates=['time'])
             if not df.empty:
                 # Parse JSON features
                 df['features_parsed'] = df['features'].apply(json.loads)
+                df.rename(columns={'time': 'timestamp'}, inplace=True)
                 df.set_index('timestamp', inplace=True)
 
         return df
 
-    def insert_labels(self, symbol: str, timestamp: datetime, label_type: str,
-                      rr_preset: str, label_value: int, barrier_meta: Dict = None,
-                      sample_weight: float = None) -> bool:
+    def insert_labels(self, symbol: str, time: datetime, label_type: str,
+                      rr_preset: str, label_value: int, barrier_meta: Optional[Dict] = None,
+                      sample_weight: Optional[float] = None) -> bool:
         """Insert label data"""
         with self.get_connection() as conn:
             try:
                 conn.execute("""
                     INSERT OR REPLACE INTO labels
-                    (symbol, timestamp, label_type, rr_preset, label_value, barrier_meta, sample_weight)
+                    (symbol, time, label_type, rr_preset, label_value, barrier_meta, sample_weight)
                     VALUES (?, ?, ?, ?, ?, ?, ?)
-                """, (symbol, timestamp, label_type, rr_preset, label_value,
+                """, (symbol, time, label_type, rr_preset, label_value,
                       json.dumps(barrier_meta) if barrier_meta else None, sample_weight))
                 conn.commit()
                 return True
@@ -244,21 +238,22 @@ class TradingDatabase:
                    start_date: Optional[datetime] = None, end_date: Optional[datetime] = None) -> pd.DataFrame:
         """Retrieve labels for a symbol"""
         query = "SELECT * FROM labels WHERE symbol = ? AND label_type = ? AND rr_preset = ?"
-        params = [symbol, label_type, rr_preset]
+        params: List[Any] = [symbol, label_type, rr_preset]
 
         if start_date:
-            query += " AND timestamp >= ?"
+            query += " AND time >= ?"
             params.append(start_date)
 
         if end_date:
-            query += " AND timestamp <= ?"
+            query += " AND time <= ?"
             params.append(end_date)
 
-        query += " ORDER BY timestamp"
+        query += " ORDER BY time"
 
         with self.get_connection() as conn:
-            df = pd.read_sql_query(query, conn, params=params, parse_dates=['timestamp'])
+            df = pd.read_sql_query(query, conn, params=params, parse_dates=['time'])
             if not df.empty:
+                df.rename(columns={'time': 'timestamp'}, inplace=True)
                 df.set_index('timestamp', inplace=True)
 
         return df
@@ -301,6 +296,24 @@ class TradingDatabase:
 
 class M5Database:
     """Database interface for legacy m5_trading.db schema
+
+    def insert_backtest_result(self, backtest_id: str, symbol: str, strategy_config: str,
+                               metrics: str, trades: str, equity_curve: str, report_path: str) -> bool:
+        """Saves backtest results."""
+        with self.get_connection() as conn:
+            try:
+                conn.execute("""
+                    INSERT INTO backtest_results
+                    (backtest_id, symbol, strategy_config, metrics, trades, equity_curve, report_path)
+                    VALUES (?, ?, ?, ?, ?, ?, ?)
+                """, (backtest_id, symbol, strategy_config, metrics, trades, equity_curve, report_path))
+                conn.commit()
+                logger.info(f"Backtest result for {backtest_id} saved to database.")
+                return True
+            except Exception as e:
+                logger.error(f"Failed to save backtest result {backtest_id}: {e}")
+                return False
+
     Schema:
       - bars(symbol TEXT, time DATETIME, open, high, low, close, volume)
       - features(symbol TEXT, time DATETIME, feat TEXT JSON)
@@ -535,11 +548,10 @@ class M5Database:
 
     # ---------------------------- Models & Backtests (for compatibility) ----------------------------
     def save_model_artifact(self, model_type: str, symbol: str, model_version: str,
-                           artifact_path: str, metrics: Dict, hyperparameters: Dict,
-                           training_period: Tuple[datetime, datetime]) -> bool:
+                           metrics: Dict, hyperparameters: Dict) -> bool:
         """Saves model artifact metadata to the `models` table for compatibility."""
+        model_id = f"{model_type}_{symbol}_{model_version}"
         try:
-            model_id = f"{model_type}_{symbol}_{model_version}"
             with self.get_connection() as conn:
                 conn.execute(
                     "INSERT OR REPLACE INTO models (model_id, type, params, metrics, created_at) VALUES (?, ?, ?, ?, ?)",
@@ -552,8 +564,7 @@ class M5Database:
             logger.error(f"Failed to save model artifact {model_id}: {e}")
             return False
 
-    def insert_backtest_result(self, backtest_id: str, symbol: str, strategy_config: str,
-                               metrics: str, trades: str, equity_curve: str, report_path: str) -> bool:
+    def insert_backtest_result(self, backtest_id: str, metrics: str) -> bool:
         """Saves backtest results to the `trades` table for compatibility."""
         # The legacy schema doesn't have a dedicated backtest table.
         # We can log the main result as a special trade record if needed, but for now, we just log it.

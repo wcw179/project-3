@@ -23,6 +23,12 @@ import gc
 ROOT = Path(__file__).resolve().parents[2]
 sys.path.append(str(ROOT))
 
+# --- COLAB/DRIVE PATH CONFIGURATION ---
+# If running on Google Colab, uncomment the following line and set your project path
+# BASE_DIR = Path('/content/drive/MyDrive/your_project_folder_name')
+BASE_DIR = ROOT
+# ---
+
 from src.models.lstm_model import LSTMTrendClassifier
 from src.models.xgb_model import XGBMetaModel
 from src.features.labeling import TripleBarrierLabeling
@@ -31,8 +37,8 @@ from src.features.labeling import TripleBarrierLabeling
 logging.basicConfig(level=logging.INFO, format='%(asctime)s - %(levelname)s - %(message)s')
 logger = logging.getLogger("execute_training")
 
-DB_PATH = ROOT / 'data' / 'm5_trading.db'
-ARTIFACTS_DIR = ROOT / 'artifacts'
+DB_PATH = BASE_DIR / 'data' / 'm5_trading.db'
+ARTIFACTS_DIR = BASE_DIR / 'artifacts'
 DATA_SUBSET = 25000
 
 # --- Data Loading (Definitive Fix) ---

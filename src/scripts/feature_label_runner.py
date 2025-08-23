@@ -25,6 +25,12 @@ import sys
 ROOT = Path(__file__).resolve().parents[2]
 sys.path.append(str(ROOT))
 
+# --- COLAB/DRIVE PATH CONFIGURATION ---
+# If running on Google Colab, uncomment the following line and set your project path
+# BASE_DIR = Path('/content/drive/MyDrive/your_project_folder_name')
+BASE_DIR = ROOT
+# ---
+
 from src.data.database import M5Database
 from src.features.feature_pipeline import FeaturePipeline
 from src.features.labeling import TripleBarrierLabeling
@@ -34,8 +40,8 @@ from src.features.technical_indicators import TechnicalIndicators
 logging.basicConfig(level=logging.INFO, format='%(asctime)s - %(levelname)s - %(message)s')
 logger = logging.getLogger("feature_label_runner_v2")
 
-DB_PATH = ROOT / 'data' / 'm5_trading.db'
-CONFIG_PATH = ROOT / 'config.json'
+DB_PATH = BASE_DIR / 'data' / 'm5_trading.db'
+CONFIG_PATH = BASE_DIR / 'config.json'
 
 # --- Core Functions ---
 

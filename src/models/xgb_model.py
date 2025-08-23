@@ -20,7 +20,7 @@ from sklearn.preprocessing import StandardScaler
 import optuna
 from xgboost.callback import EarlyStopping
 
-from src.data.database import TradingDatabase
+
 
 logger = logging.getLogger(__name__)
 

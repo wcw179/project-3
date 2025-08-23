@@ -363,11 +363,22 @@ class BacktestEngine:
             return {}
         
         # Load features
-        from src.features.feature_pipeline import FeaturePipeline
-        feature_pipeline = FeaturePipeline()
-        
-        features_lstm = feature_pipeline.load_features(symbol, 'lstm', config.start_date, config.end_date)
-        features_xgb = feature_pipeline.load_features(symbol, 'xgb', config.start_date, config.end_date)
+        # Load features from database
+        features_lstm_raw = self.db.get_features(symbol, 'lstm', config.start_date, config.end_date)
+        features_xgb_raw = self.db.get_features(symbol, 'xgb', config.start_date, config.end_date)
+
+        # Expand features from JSON
+        if not features_lstm_raw.empty:
+            lstm_records = features_lstm_raw['features_parsed'].tolist()
+            features_lstm = pd.DataFrame.from_records(lstm_records, index=features_lstm_raw.index)
+        else:
+            features_lstm = pd.DataFrame()
+
+        if not features_xgb_raw.empty:
+            xgb_records = features_xgb_raw['features_parsed'].tolist()
+            features_xgb = pd.DataFrame.from_records(xgb_records, index=features_xgb_raw.index)
+        else:
+            features_xgb = pd.DataFrame()
         
         if features_lstm.empty or features_xgb.empty:
             logger.error(f"No features available for {symbol}")

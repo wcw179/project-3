@@ -66,7 +66,7 @@ class LiveTradingEngine:
         self.config = config
         self.db = TradingDatabase(db_path)
         self.data_ingestion = DataIngestion(db_path)
-        self.feature_pipeline = FeaturePipeline(db_path)
+        self.feature_pipeline = FeaturePipeline()
         self.he = HierarchicalExtremes(levels=3, atr_lookback=1440)
         
         self.models_dir = Path(models_dir)

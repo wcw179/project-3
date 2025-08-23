@@ -22,7 +22,7 @@ from sklearn.model_selection import TimeSeriesSplit
 from sklearn.metrics import classification_report, confusion_matrix
 from sklearn.preprocessing import StandardScaler
 
-from src.data.database import TradingDatabase
+
 
 logger = logging.getLogger(__name__)
 
