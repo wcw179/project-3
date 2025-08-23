@@ -8,4 +8,4 @@ matplotlib
 seaborn
 jinja2
 openpyxl
-talib-binary
+TA-Lib

@@ -20,6 +20,8 @@ from datetime import datetime
 import pandas as pd
 import logging
 import sys
+import multiprocessing
+from concurrent.futures import ProcessPoolExecutor, as_completed
 
 # --- Setup Project Environment ---
 ROOT = Path(__file__).resolve().parents[2]
@@ -30,7 +32,7 @@ sys.path.append(str(ROOT))
 # 1. Set the project's root folder in your Google Drive.
 BASE_DIR = Path('/content/drive/MyDrive/M5_Trading_Bot')
 # 2. Set the full path to your m5_trading.db file.
-DB_PATH = Path('/content/drive/MyDrive/trading_bot_data/m5_trading.db')
+DB_PATH = Path('/content/drive/MyDrive/M5_Trading_Bot/m5_trading.db')
 
 # If running locally, you can use the following default paths:
 # BASE_DIR = ROOT
@@ -68,14 +70,14 @@ def get_run_config(conn: sqlite3.Connection) -> tuple:
     rows = conn.cursor().execute("SELECT symbol, MIN(time), MAX(time) FROM bars GROUP BY symbol").fetchall()
     symbols = [r[0] for r in rows]
     if rows:
-        start_dt = pd.to_datetime([r[1] for r in rows]).min()
-        end_dt = pd.to_datetime([r[2] for r in rows]).max()
+        start_dt = pd.to_datetime([r[1] for r in rows], errors='coerce', format='mixed').min()
+        end_dt = pd.to_datetime([r[2] for r in rows], errors='coerce', format='mixed').max()
     else:
         start_dt, end_dt = None, None
     logger.info(f"DB Fallback: Symbols={symbols}, Start={start_dt}, End={end_dt}")
     return symbols, start_dt, end_dt
 
-def run_symbol_processing(symbol: str, start_dt: datetime, end_dt: datetime):
+def run_symbol_processing(symbol: str, start_dt: datetime, end_dt: datetime) -> bool:
     """Main processing pipeline for a single symbol."""
     logger.info(f"--- Starting processing for symbol: {symbol} ---")
     db = M5Database(str(DB_PATH))
@@ -90,7 +92,7 @@ def run_symbol_processing(symbol: str, start_dt: datetime, end_dt: datetime):
     if total_bars == 0:
         logger.warning(f"No bars found for {symbol}. Skipping.")
         conn.close()
-        return
+        return False
 
     logger.info(f"Total bars to process for {symbol}: {total_bars}")
 
@@ -157,6 +159,7 @@ def run_symbol_processing(symbol: str, start_dt: datetime, end_dt: datetime):
 
     conn.close()
     logger.info(f"--- Finished processing for symbol: {symbol} ---")
+    return True
 
 # --- Main Execution ---
 if __name__ == '__main__':
@@ -169,13 +172,27 @@ if __name__ == '__main__':
         if not symbols_to_run:
             raise ValueError("No symbols found to process.")
 
-        for symbol in symbols_to_run:
-            run_symbol_processing(symbol, start_date, end_date)
+        max_workers = multiprocessing.cpu_count()
+        logger.info(f"Using up to {max_workers} parallel processes for feature generation.")
 
-        logger.info("All symbols processed successfully.")
+        with ProcessPoolExecutor(max_workers=max_workers) as executor:
+            futures = {executor.submit(run_symbol_processing, symbol, start_date, end_date): symbol for symbol in symbols_to_run}
+
+            results = {}
+            for future in as_completed(futures):
+                symbol = futures[future]
+                try:
+                    success = future.result()
+                    results[symbol] = {'status': 'success' if success else 'failed'}
+                except Exception as e:
+                    logger.error(f"Processing for {symbol} generated an exception: {e}", exc_info=True)
+                    results[symbol] = {'status': 'error', 'error': str(e)}
+
+        successful = sum(1 for r in results.values() if r.get('status') == 'success')
+        logger.info(f"All symbols processed: {successful}/{len(symbols_to_run)} successful.")
 
     except Exception as e:
-        logger.error(f"An unhandled error occurred: {e}", exc_info=True)
+        logger.error(f"An unhandled error occurred in the main runner: {e}", exc_info=True)
     finally:
         db_connection.close()
 

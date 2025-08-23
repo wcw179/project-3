@@ -18,6 +18,8 @@ import logging
 from pathlib import Path
 import sys
 import gc
+import multiprocessing
+from concurrent.futures import ProcessPoolExecutor, as_completed
 
 # --- Setup Project Environment ---
 ROOT = Path(__file__).resolve().parents[2]
@@ -28,7 +30,7 @@ sys.path.append(str(ROOT))
 # 1. Set the project's root folder in your Google Drive.
 BASE_DIR = Path('/content/drive/MyDrive/M5_Trading_Bot')
 # 2. Set the full path to your m5_trading.db file.
-DB_PATH = Path('/content/drive/MyDrive/trading_bot_data/m5_trading.db')
+DB_PATH = Path('/content/drive/MyDrive/M5_Trading_Bot/m5_trading.db')
 
 # If running locally, you can use the following default paths:
 # BASE_DIR = ROOT
@@ -49,14 +51,14 @@ DATA_SUBSET = 25000
 # --- Data Loading (Definitive Fix) ---
 def load_training_data(symbol: str) -> dict:
     logger.info(f"Loading recent {DATA_SUBSET} aligned records for {symbol}...")
-    
+
     with sqlite3.connect(DB_PATH) as conn:
         query = f"""
-        SELECT f.time, f.feat, l.meta FROM 
+        SELECT f.time, f.feat, l.meta FROM
         (SELECT time, feat, symbol FROM features WHERE symbol = ?) f
-        INNER JOIN 
+        INNER JOIN
         (SELECT time, meta, symbol FROM labels WHERE symbol = ?) l
-        ON f.time = l.time 
+        ON f.time = l.time
         ORDER BY f.time DESC LIMIT {DATA_SUBSET}
         """
         df_reversed = pd.read_sql_query(query, conn, params=(symbol, symbol), parse_dates=['time'])
@@ -71,13 +73,13 @@ def load_training_data(symbol: str) -> dict:
     # Unpack features and labels
     lstm_features = pd.DataFrame([json.loads(f).get('lstm', {}) for f in df['feat']], index=df.index)
     xgb_features = pd.DataFrame([json.loads(f).get('xgb', {}) for f in df['feat']], index=df.index)
-    
+
     primary_labels_data = []
     for idx, row in df.iterrows():
         meta = json.loads(row['meta'])
         if 'label' in meta:
             primary_labels_data.append({
-                'timestamp': idx, 
+                'timestamp': idx,
                 'direction': meta.get('direction'),
                 'label': meta.get('label', 0)
             })
@@ -88,7 +90,7 @@ def load_training_data(symbol: str) -> dict:
     primary_labels = pd.DataFrame(primary_labels_data).set_index('timestamp')
 
     common_index = lstm_features.index.intersection(primary_labels.index)
-    
+
     return {
         'lstm_features': lstm_features.loc[common_index],
         'xgb_features': xgb_features.loc[common_index],
@@ -96,7 +98,7 @@ def load_training_data(symbol: str) -> dict:
     }
 
 # --- Main Training Workflow ---
-def main(symbol: str):
+def train_symbol(symbol: str):
     logger.info(f"--- Starting Definitive Model Training Pipeline for {symbol} ---")
     data = load_training_data(symbol)
 
@@ -108,7 +110,7 @@ def main(symbol: str):
     # THE DEFINITIVE FIX: Explicitly pass n_features to the constructor.
     lstm = LSTMTrendClassifier(n_features=X_lstm.shape[1])
     lstm.train(X=X_lstm.values, y=y_base.values, epochs=50, batch_size=32, use_purged_cv=True)
-    
+
     lstm_path = ARTIFACTS_DIR / 'models' / 'lstm' / symbol
     lstm_path.mkdir(parents=True, exist_ok=True)
     lstm.save_model(str(lstm_path / 'model.h5'))
@@ -146,8 +148,31 @@ def main(symbol: str):
     logger.info(f"XGBoost Recall (Trade): {trade_metrics['recall']:.4f}")
 
     del lstm, xgb, data; gc.collect()
-    logger.info("--- Model Training Pipeline Completed ---")
+    logger.info(f"--- Model Training Pipeline Completed for {symbol} ---")
+    return True
 
 if __name__ == '__main__':
-    main("XAUUSDm")
+    # --- SYMBOLS TO TRAIN ---
+    # Add the symbols you want to train here
+    symbols_to_train = ["EURUSD", "GBPUSD", "XAUUSDm"]
+
+    max_workers = multiprocessing.cpu_count()
+    logger.info(f"Starting multi-symbol training for: {symbols_to_train}")
+    logger.info(f"Using up to {max_workers} parallel processes.")
+
+    with ProcessPoolExecutor(max_workers=max_workers) as executor:
+        futures = {executor.submit(train_symbol, symbol): symbol for symbol in symbols_to_train}
+
+        results = {}
+        for future in as_completed(futures):
+            symbol = futures[future]
+            try:
+                success = future.result()
+                results[symbol] = {'status': 'success' if success else 'failed'}
+            except Exception as e:
+                logger.error(f"Training for {symbol} generated an exception: {e}", exc_info=True)
+                results[symbol] = {'status': 'error', 'error': str(e)}
+
+    successful = sum(1 for r in results.values() if r.get('status') == 'success')
+    logger.info(f"All symbols trained: {successful}/{len(symbols_to_train)} successful.")
 
