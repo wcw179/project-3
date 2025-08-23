@@ -26,9 +26,15 @@ ROOT = Path(__file__).resolve().parents[2]
 sys.path.append(str(ROOT))
 
 # --- COLAB/DRIVE PATH CONFIGURATION ---
-# If running on Google Colab, uncomment the following line and set your project path
-# BASE_DIR = Path('/content/drive/MyDrive/your_project_folder_name')
-BASE_DIR = ROOT
+# If running on Google Colab, set your project's base directory and the path to your database file.
+# 1. Set the project's root folder in your Google Drive.
+BASE_DIR = Path('/content/drive/MyDrive/M5_Trading_Bot')
+# 2. Set the full path to your m5_trading.db file.
+DB_PATH = Path('/content/drive/MyDrive/trading_bot_data/m5_trading.db')
+
+# If running locally, you can use the following default paths:
+# BASE_DIR = ROOT
+# DB_PATH = BASE_DIR / 'data' / 'm5_trading.db'
 # ---
 
 from src.data.database import M5Database
@@ -40,7 +46,6 @@ from src.features.technical_indicators import TechnicalIndicators
 logging.basicConfig(level=logging.INFO, format='%(asctime)s - %(levelname)s - %(message)s')
 logger = logging.getLogger("feature_label_runner_v2")
 
-DB_PATH = BASE_DIR / 'data' / 'm5_trading.db'
 CONFIG_PATH = BASE_DIR / 'config.json'
 
 # --- Core Functions ---

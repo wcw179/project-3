@@ -296,24 +296,6 @@ class TradingDatabase:
 
 class M5Database:
     """Database interface for legacy m5_trading.db schema
-
-    def insert_backtest_result(self, backtest_id: str, symbol: str, strategy_config: str,
-                               metrics: str, trades: str, equity_curve: str, report_path: str) -> bool:
-        """Saves backtest results."""
-        with self.get_connection() as conn:
-            try:
-                conn.execute("""
-                    INSERT INTO backtest_results
-                    (backtest_id, symbol, strategy_config, metrics, trades, equity_curve, report_path)
-                    VALUES (?, ?, ?, ?, ?, ?, ?)
-                """, (backtest_id, symbol, strategy_config, metrics, trades, equity_curve, report_path))
-                conn.commit()
-                logger.info(f"Backtest result for {backtest_id} saved to database.")
-                return True
-            except Exception as e:
-                logger.error(f"Failed to save backtest result {backtest_id}: {e}")
-                return False
-
     Schema:
       - bars(symbol TEXT, time DATETIME, open, high, low, close, volume)
       - features(symbol TEXT, time DATETIME, feat TEXT JSON)
