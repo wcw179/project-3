@@ -1,0 +1,10 @@
+{
+  "sequence_length": 60,
+  "n_features": 59,
+  "n_classes": 3,
+  "hidden_units": 64,
+  "n_layers": 2,
+  "dropout_rate": 0.2,
+  "learning_rate": 0.001,
+  "use_focal_loss": true
+}

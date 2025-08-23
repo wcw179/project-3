@@ -1,0 +1,355 @@
+2025-08-22 14:29:50,709 - src.data.database - INFO - Database initialized successfully
+2025-08-22 14:30:30,675 - src.data.database - INFO - Database initialized successfully
+2025-08-22 14:30:30,676 - src.data.database - INFO - Database initialized successfully
+2025-08-22 14:30:30,677 - src.data.database - INFO - Database initialized successfully
+2025-08-22 14:30:30,677 - __main__ - INFO - Starting model training...
+2025-08-22 14:30:30,678 - src.deployment.training_pipeline - INFO - Starting multi-symbol training for 1 symbols
+2025-08-22 14:30:30,678 - src.deployment.training_pipeline - INFO - Training models for XAUUSDm (1/1)
+2025-08-22 14:30:30,678 - src.deployment.training_pipeline - INFO - Starting complete training pipeline for XAUUSDm
+2025-08-22 14:30:30,679 - src.deployment.training_pipeline - INFO - Preparing training data for XAUUSDm
+2025-08-22 14:30:30,699 - src.deployment.training_pipeline - ERROR - Training pipeline failed for XAUUSDm: No OHLCV data for XAUUSDm
+2025-08-22 14:30:30,829 - src.deployment.training_pipeline - INFO - Multi-symbol training completed: 0/1 successful
+2025-08-22 14:30:30,830 - __main__ - INFO - Model training completed: 0/1 symbols successful
+2025-08-22 14:32:42,842 - src.data.database - INFO - Database initialized successfully
+2025-08-22 14:32:42,844 - src.data.database - INFO - Database initialized successfully
+2025-08-22 14:32:42,844 - __main__ - INFO - Starting model training...
+2025-08-22 14:32:42,844 - src.deployment.training_pipeline - INFO - Starting multi-symbol training for 1 symbols
+2025-08-22 14:32:42,845 - src.deployment.training_pipeline - INFO - Training models for XAUUSDm (1/1)
+2025-08-22 14:32:42,845 - src.deployment.training_pipeline - INFO - Starting complete training pipeline for XAUUSDm
+2025-08-22 14:32:42,845 - src.deployment.training_pipeline - INFO - Preparing training data for XAUUSDm
+2025-08-22 14:32:42,849 - src.deployment.training_pipeline - ERROR - Training pipeline failed for XAUUSDm: No OHLCV data for XAUUSDm
+2025-08-22 14:32:42,990 - src.deployment.training_pipeline - INFO - Multi-symbol training completed: 0/1 successful
+2025-08-22 14:32:42,990 - __main__ - INFO - Model training completed: 0/1 symbols successful
+2025-08-22 14:35:57,279 - src.data.database - INFO - Database initialized successfully
+2025-08-22 14:35:57,279 - src.data.database - INFO - Database initialized successfully
+2025-08-22 14:35:57,279 - __main__ - INFO - Starting model training...
+2025-08-22 14:35:57,280 - src.deployment.training_pipeline - INFO - Starting multi-symbol training for 1 symbols
+2025-08-22 14:35:57,280 - src.deployment.training_pipeline - INFO - Training models for XAUUSDm (1/1)
+2025-08-22 14:35:57,280 - src.deployment.training_pipeline - INFO - Starting complete training pipeline for XAUUSDm
+2025-08-22 14:35:57,280 - src.deployment.training_pipeline - INFO - Preparing training data for XAUUSDm
+2025-08-22 14:35:57,283 - src.deployment.training_pipeline - ERROR - Training pipeline failed for XAUUSDm: No OHLCV data for XAUUSDm
+2025-08-22 14:35:57,423 - src.deployment.training_pipeline - INFO - Multi-symbol training completed: 0/1 successful
+2025-08-22 14:35:57,424 - __main__ - INFO - Model training completed: 0/1 symbols successful
+2025-08-22 14:40:22,756 - src.data.database - INFO - Database initialized successfully
+2025-08-22 14:40:22,757 - src.data.database - INFO - Database initialized successfully
+2025-08-22 14:40:22,757 - __main__ - INFO - Starting model training...
+2025-08-22 14:40:22,758 - src.deployment.training_pipeline - INFO - Starting multi-symbol training for 1 symbols
+2025-08-22 14:40:22,758 - src.deployment.training_pipeline - INFO - Training models for XAUUSDm (1/1)
+2025-08-22 14:40:22,758 - src.deployment.training_pipeline - INFO - Starting complete training pipeline for XAUUSDm
+2025-08-22 14:40:22,759 - src.deployment.training_pipeline - INFO - Preparing training data for XAUUSDm
+2025-08-22 14:40:22,763 - src.deployment.training_pipeline - ERROR - Training pipeline failed for XAUUSDm: Execution failed on sql 'SELECT symbol, time, feat FROM features WHERE symbol = ? AND time >= ? AND time <= ? ORDER BY time': no such column: time
+2025-08-22 14:40:22,905 - src.deployment.training_pipeline - INFO - Multi-symbol training completed: 0/1 successful
+2025-08-22 14:40:22,905 - __main__ - INFO - Model training completed: 0/1 symbols successful
+2025-08-22 14:42:52,281 - src.data.database - INFO - Database initialized successfully
+2025-08-22 14:42:52,282 - src.data.database - INFO - Database initialized successfully
+2025-08-22 14:42:52,282 - __main__ - INFO - Starting model training...
+2025-08-22 14:42:52,282 - src.deployment.training_pipeline - INFO - Starting multi-symbol training for 1 symbols
+2025-08-22 14:42:52,283 - src.deployment.training_pipeline - INFO - Training models for XAUUSDm (1/1)
+2025-08-22 14:42:52,283 - src.deployment.training_pipeline - INFO - Starting complete training pipeline for XAUUSDm
+2025-08-22 14:42:52,283 - src.deployment.training_pipeline - INFO - Preparing training data for XAUUSDm
+2025-08-22 14:44:29,667 - src.data.database - INFO - Database initialized successfully
+2025-08-22 14:44:29,669 - src.data.database - INFO - Database initialized successfully
+2025-08-22 14:44:29,669 - __main__ - INFO - Starting model training...
+2025-08-22 14:44:29,669 - src.deployment.training_pipeline - INFO - Starting multi-symbol training for 1 symbols
+2025-08-22 14:44:29,670 - src.deployment.training_pipeline - INFO - Training models for XAUUSDm (1/1)
+2025-08-22 14:44:29,670 - src.deployment.training_pipeline - INFO - Starting complete training pipeline for XAUUSDm
+2025-08-22 14:44:29,670 - src.deployment.training_pipeline - INFO - Preparing training data for XAUUSDm
+2025-08-22 14:44:50,541 - src.deployment.training_pipeline - ERROR - Training pipeline failed for XAUUSDm: No labels could be extracted for RR preset '1:2'
+2025-08-22 14:44:50,712 - src.deployment.training_pipeline - INFO - Multi-symbol training completed: 0/1 successful
+2025-08-22 14:44:50,712 - __main__ - INFO - Model training completed: 0/1 symbols successful
+2025-08-22 14:47:24,818 - src.data.database - INFO - Database initialized successfully
+2025-08-22 14:47:24,820 - src.data.database - INFO - Database initialized successfully
+2025-08-22 14:47:24,820 - __main__ - INFO - Starting model training...
+2025-08-22 14:47:24,821 - src.deployment.training_pipeline - INFO - Starting multi-symbol training for 1 symbols
+2025-08-22 14:47:24,821 - src.deployment.training_pipeline - INFO - Training models for XAUUSDm (1/1)
+2025-08-22 14:47:24,821 - src.deployment.training_pipeline - INFO - Starting complete training pipeline for XAUUSDm
+2025-08-22 14:47:24,822 - src.deployment.training_pipeline - INFO - Preparing training data for XAUUSDm using pre-generated features and labels.
+2025-08-22 14:47:46,066 - src.deployment.training_pipeline - ERROR - Training pipeline failed for XAUUSDm: No labels could be extracted for RR preset '1:2'
+2025-08-22 14:47:46,246 - src.deployment.training_pipeline - INFO - Multi-symbol training completed: 0/1 successful
+2025-08-22 14:47:46,246 - __main__ - INFO - Model training completed: 0/1 symbols successful
+2025-08-22 14:51:06,472 - src.data.database - INFO - Database initialized successfully
+2025-08-22 14:51:06,472 - src.data.database - INFO - Database initialized successfully
+2025-08-22 14:51:06,472 - __main__ - INFO - Starting model training...
+2025-08-22 14:51:06,473 - src.deployment.training_pipeline - INFO - Starting multi-symbol training for 1 symbols
+2025-08-22 14:51:06,473 - src.deployment.training_pipeline - INFO - Training models for XAUUSDm (1/1)
+2025-08-22 14:51:06,473 - src.deployment.training_pipeline - INFO - Starting complete training pipeline for XAUUSDm
+2025-08-22 14:51:06,473 - src.deployment.training_pipeline - INFO - Preparing training data for XAUUSDm from 'data/m5_trading.db'.
+2025-08-22 14:51:54,057 - src.features.labeling - INFO - Removed overlapping events: 42167 -> 2012 samples
+2025-08-22 14:51:54,095 - src.deployment.training_pipeline - INFO - Prepared 2012 training samples for XAUUSDm
+2025-08-22 14:51:54,122 - src.deployment.training_pipeline - INFO - Training LSTM model for XAUUSDm
+2025-08-22 14:51:54,388 - src.models.lstm_model - INFO - Built LSTM model with 239043 parameters
+2025-08-22 14:51:54,803 - src.models.lstm_model - INFO - Training fold 1/5
+2025-08-22 14:54:31,857 - src.deployment.training_pipeline - ERROR - Training pipeline failed for XAUUSDm: too many values to unpack (expected 2)
+2025-08-22 14:54:32,079 - src.deployment.training_pipeline - INFO - Multi-symbol training completed: 0/1 successful
+2025-08-22 14:54:32,080 - __main__ - INFO - Model training completed: 0/1 symbols successful
+2025-08-22 14:55:34,973 - src.data.database - INFO - Database initialized successfully
+2025-08-22 14:55:34,973 - src.data.database - INFO - Database initialized successfully
+2025-08-22 14:55:34,973 - __main__ - INFO - Starting model training...
+2025-08-22 14:55:34,974 - src.deployment.training_pipeline - INFO - Starting multi-symbol training for 1 symbols
+2025-08-22 14:55:34,974 - src.deployment.training_pipeline - INFO - Training models for XAUUSDm (1/1)
+2025-08-22 14:55:34,974 - src.deployment.training_pipeline - INFO - Starting complete training pipeline for XAUUSDm
+2025-08-22 14:55:34,974 - src.deployment.training_pipeline - INFO - Preparing training data for XAUUSDm from 'data/m5_trading.db'.
+2025-08-22 14:56:26,107 - src.features.labeling - INFO - Removed overlapping events: 42167 -> 2012 samples
+2025-08-22 14:56:26,130 - src.deployment.training_pipeline - INFO - Prepared 2012 training samples for XAUUSDm
+2025-08-22 14:56:26,159 - src.deployment.training_pipeline - INFO - Training LSTM model for XAUUSDm
+2025-08-22 14:56:26,334 - src.models.lstm_model - INFO - Built LSTM model with 239043 parameters
+2025-08-22 14:56:26,810 - src.models.lstm_model - INFO - Training fold 1/5
+2025-08-22 14:59:16,683 - src.deployment.training_pipeline - ERROR - Training pipeline failed for XAUUSDm: too many values to unpack (expected 2)
+2025-08-22 14:59:16,898 - src.deployment.training_pipeline - INFO - Multi-symbol training completed: 0/1 successful
+2025-08-22 14:59:16,899 - __main__ - INFO - Model training completed: 0/1 symbols successful
+2025-08-22 15:00:35,756 - src.data.database - INFO - Database initialized successfully
+2025-08-22 15:00:35,757 - src.data.database - INFO - Database initialized successfully
+2025-08-22 15:00:35,757 - __main__ - INFO - Starting model training...
+2025-08-22 15:00:35,758 - src.deployment.training_pipeline - INFO - Starting multi-symbol training for 1 symbols
+2025-08-22 15:00:35,758 - src.deployment.training_pipeline - INFO - Training models for XAUUSDm (1/1)
+2025-08-22 15:00:35,758 - src.deployment.training_pipeline - INFO - Starting complete training pipeline for XAUUSDm
+2025-08-22 15:00:35,758 - src.deployment.training_pipeline - INFO - Preparing training data for XAUUSDm from 'data/m5_trading.db'.
+2025-08-22 15:01:30,779 - src.features.labeling - INFO - Removed overlapping events: 42167 -> 2012 samples
+2025-08-22 15:01:30,811 - src.deployment.training_pipeline - INFO - Prepared 2012 training samples for XAUUSDm
+2025-08-22 15:01:30,840 - src.deployment.training_pipeline - INFO - Training LSTM model for XAUUSDm
+2025-08-22 15:01:31,095 - src.models.lstm_model - INFO - Built LSTM model with 239043 parameters
+2025-08-22 15:01:31,752 - src.models.lstm_model - INFO - Training fold 1/5
+2025-08-22 15:04:08,212 - src.deployment.training_pipeline - ERROR - Training pipeline failed for XAUUSDm: too many values to unpack (expected 2)
+2025-08-22 15:04:08,440 - src.deployment.training_pipeline - INFO - Multi-symbol training completed: 0/1 successful
+2025-08-22 15:04:08,440 - __main__ - INFO - Model training completed: 0/1 symbols successful
+2025-08-22 15:06:56,431 - src.data.database - INFO - Database initialized successfully
+2025-08-22 15:06:56,432 - src.data.database - INFO - Database initialized successfully
+2025-08-22 15:06:56,432 - __main__ - INFO - Starting model training...
+2025-08-22 15:06:56,433 - src.deployment.training_pipeline - INFO - Starting multi-symbol training for 1 symbols
+2025-08-22 15:06:56,433 - src.deployment.training_pipeline - INFO - Training models for XAUUSDm (1/1)
+2025-08-22 15:06:56,433 - src.deployment.training_pipeline - INFO - Starting complete training pipeline for XAUUSDm
+2025-08-22 15:06:56,433 - src.deployment.training_pipeline - INFO - Preparing training data for XAUUSDm from 'data/m5_trading.db'.
+2025-08-22 15:07:45,751 - src.features.labeling - INFO - Removed overlapping events: 42167 -> 2012 samples
+2025-08-22 15:07:45,787 - src.deployment.training_pipeline - INFO - Prepared 2012 training samples for XAUUSDm
+2025-08-22 15:07:45,828 - src.deployment.training_pipeline - INFO - Training LSTM model for XAUUSDm
+2025-08-22 15:07:45,984 - src.models.lstm_model - INFO - Built LSTM model with 239043 parameters
+2025-08-22 15:07:46,423 - src.models.lstm_model - INFO - Training fold 1/5
+2025-08-22 15:10:21,590 - src.deployment.training_pipeline - ERROR - Training pipeline failed for XAUUSDm: too many values to unpack (expected 2)
+2025-08-22 15:10:21,827 - src.deployment.training_pipeline - INFO - Multi-symbol training completed: 0/1 successful
+2025-08-22 15:10:21,828 - __main__ - INFO - Model training completed: 0/1 symbols successful
+2025-08-22 15:19:51,584 - src.data.database - INFO - Database initialized successfully
+2025-08-22 15:19:51,585 - src.data.database - INFO - Database initialized successfully
+2025-08-22 15:19:51,586 - __main__ - INFO - Starting model training...
+2025-08-22 15:19:51,586 - src.deployment.training_pipeline - INFO - Starting multi-symbol training for 1 symbols
+2025-08-22 15:19:51,586 - src.deployment.training_pipeline - INFO - Training models for XAUUSDm (1/1)
+2025-08-22 15:19:51,586 - src.deployment.training_pipeline - INFO - Starting complete training pipeline for XAUUSDm
+2025-08-22 15:19:51,587 - src.deployment.training_pipeline - INFO - Preparing training data for XAUUSDm from 'data/m5_trading.db'.
+2025-08-22 15:20:38,746 - src.features.labeling - INFO - Removed overlapping events: 42167 -> 2012 samples
+2025-08-22 15:20:38,768 - src.deployment.training_pipeline - INFO - Prepared 2012 training samples for XAUUSDm
+2025-08-22 15:20:38,797 - src.deployment.training_pipeline - INFO - Training LSTM model for XAUUSDm
+2025-08-22 15:20:38,948 - src.models.lstm_model - INFO - Built LSTM model with 239043 parameters
+2025-08-22 15:20:39,510 - src.models.lstm_model - INFO - Training fold 1/5
+2025-08-22 15:22:55,702 - src.models.lstm_model - INFO - Training fold 2/5
+2025-08-22 15:24:44,872 - src.models.lstm_model - INFO - Training fold 3/5
+2025-08-22 15:25:32,049 - src.models.lstm_model - INFO - Training fold 4/5
+2025-08-22 15:26:19,147 - src.models.lstm_model - INFO - Training fold 5/5
+2025-08-22 15:27:06,968 - src.models.lstm_model - INFO - Cross-validation results: Loss=0.0737, Accuracy=0.7646
+2025-08-22 15:27:09,865 - absl - WARNING - You are saving your model as an HDF5 file via `model.save()` or `keras.saving.save_model(model)`. This file format is considered legacy. We recommend using instead the native Keras format, e.g. `model.save('my_model.keras')` or `keras.saving.save_model(model, 'my_model.keras')`. 
+2025-08-22 15:27:09,947 - src.models.lstm_model - INFO - Model saved to artifacts/models/lstm/XAUUSDm/model.h5
+2025-08-22 15:27:09,960 - src.data.database - ERROR - Failed to save model artifact lstm_XAUUSDm_20250822_152709: NOT NULL constraint failed: models.created_at
+2025-08-22 15:27:09,960 - src.deployment.training_pipeline - INFO - LSTM model trained and saved for XAUUSDm
+2025-08-22 15:27:10,197 - src.deployment.training_pipeline - INFO - Generating LSTM probabilities for XAUUSDm
+2025-08-22 15:27:10,296 - absl - WARNING - Compiled the loaded model, but the compiled metrics have yet to be built. `model.compile_metrics` will be empty until you train or evaluate the model.
+2025-08-22 15:27:10,302 - src.models.lstm_model - INFO - Model loaded from artifacts/models/lstm/XAUUSDm/model.h5
+2025-08-22 15:27:12,953 - src.deployment.training_pipeline - ERROR - Training pipeline failed for XAUUSDm: 'M5Database' object has no attribute 'insert_features'
+2025-08-22 15:27:13,143 - src.deployment.training_pipeline - INFO - Multi-symbol training completed: 0/1 successful
+2025-08-22 15:27:13,143 - __main__ - INFO - Model training completed: 0/1 symbols successful
+2025-08-22 15:31:48,400 - src.data.database - INFO - Database initialized successfully
+2025-08-22 15:31:48,401 - src.data.database - INFO - Database initialized successfully
+2025-08-22 15:31:48,401 - __main__ - INFO - Starting model training...
+2025-08-22 15:31:48,401 - src.deployment.training_pipeline - INFO - Starting multi-symbol training for 1 symbols
+2025-08-22 15:31:48,401 - src.deployment.training_pipeline - INFO - Training models for XAUUSDm (1/1)
+2025-08-22 15:31:48,401 - src.deployment.training_pipeline - INFO - Starting complete training pipeline for XAUUSDm
+2025-08-22 15:31:48,402 - src.deployment.training_pipeline - INFO - Preparing training data for XAUUSDm from 'data/m5_trading.db'.
+2025-08-22 15:32:39,545 - src.features.labeling - INFO - Removed overlapping events: 42167 -> 2012 samples
+2025-08-22 15:32:39,568 - src.deployment.training_pipeline - INFO - Prepared 2012 training samples for XAUUSDm
+2025-08-22 15:32:39,598 - src.deployment.training_pipeline - INFO - Training LSTM model for XAUUSDm
+2025-08-22 15:32:39,720 - src.models.lstm_model - INFO - Built LSTM model with 239043 parameters
+2025-08-22 15:32:40,139 - src.models.lstm_model - INFO - Training fold 1/5
+2025-08-22 15:35:24,636 - src.models.lstm_model - INFO - Training fold 2/5
+2025-08-22 15:37:38,040 - src.models.lstm_model - INFO - Training fold 3/5
+2025-08-22 15:38:24,609 - src.models.lstm_model - INFO - Training fold 4/5
+2025-08-22 15:39:16,743 - src.models.lstm_model - INFO - Training fold 5/5
+2025-08-22 15:40:05,894 - src.models.lstm_model - INFO - Cross-validation results: Loss=0.0691, Accuracy=0.7749
+2025-08-22 15:40:08,278 - absl - WARNING - You are saving your model as an HDF5 file via `model.save()` or `keras.saving.save_model(model)`. This file format is considered legacy. We recommend using instead the native Keras format, e.g. `model.save('my_model.keras')` or `keras.saving.save_model(model, 'my_model.keras')`. 
+2025-08-22 15:40:08,332 - src.models.lstm_model - INFO - Model saved to artifacts/models/lstm/XAUUSDm/model.h5
+2025-08-22 15:40:08,381 - src.data.database - INFO - Saved model artifact for lstm_XAUUSDm_20250822_154008 to legacy `models` table.
+2025-08-22 15:40:08,381 - src.deployment.training_pipeline - INFO - LSTM model trained and saved for XAUUSDm
+2025-08-22 15:40:08,604 - src.deployment.training_pipeline - INFO - Generating LSTM probabilities for XAUUSDm
+2025-08-22 15:40:08,720 - absl - WARNING - Compiled the loaded model, but the compiled metrics have yet to be built. `model.compile_metrics` will be empty until you train or evaluate the model.
+2025-08-22 15:40:08,728 - src.models.lstm_model - INFO - Model loaded from artifacts/models/lstm/XAUUSDm/model.h5
+2025-08-22 15:40:11,630 - src.deployment.training_pipeline - INFO - Generated 1952 LSTM probabilities for XAUUSDm
+2025-08-22 15:40:11,632 - src.deployment.training_pipeline - INFO - Training XGB model for XAUUSDm
+2025-08-22 15:40:56,196 - src.models.xgb_model - INFO - Hyperparameter optimization completed. Best AUC: 0.6939
+2025-08-22 15:40:56,220 - src.deployment.training_pipeline - ERROR - Training pipeline failed for XAUUSDm: XGBClassifier.fit() got an unexpected keyword argument 'early_stopping_rounds'
+2025-08-22 15:40:56,408 - src.deployment.training_pipeline - INFO - Multi-symbol training completed: 0/1 successful
+2025-08-22 15:40:56,408 - __main__ - INFO - Model training completed: 0/1 symbols successful
+2025-08-22 15:42:02,566 - src.data.database - INFO - Database initialized successfully
+2025-08-22 15:42:02,566 - src.data.database - INFO - Database initialized successfully
+2025-08-22 15:42:02,567 - __main__ - INFO - Starting model training...
+2025-08-22 15:42:02,567 - src.deployment.training_pipeline - INFO - Starting multi-symbol training for 1 symbols
+2025-08-22 15:42:02,567 - src.deployment.training_pipeline - INFO - Training models for XAUUSDm (1/1)
+2025-08-22 15:42:02,567 - src.deployment.training_pipeline - INFO - Starting complete training pipeline for XAUUSDm
+2025-08-22 15:42:02,567 - src.deployment.training_pipeline - INFO - Preparing training data for XAUUSDm from 'data/m5_trading.db'.
+2025-08-22 15:42:54,146 - src.features.labeling - INFO - Removed overlapping events: 42167 -> 2012 samples
+2025-08-22 15:42:54,168 - src.deployment.training_pipeline - INFO - Prepared 2012 training samples for XAUUSDm
+2025-08-22 15:42:54,197 - src.deployment.training_pipeline - INFO - Training LSTM model for XAUUSDm
+2025-08-22 15:42:54,358 - src.models.lstm_model - INFO - Built LSTM model with 239043 parameters
+2025-08-22 15:42:54,792 - src.models.lstm_model - INFO - Training fold 1/5
+2025-08-22 15:45:18,951 - src.models.lstm_model - INFO - Training fold 2/5
+2025-08-22 15:47:59,182 - src.models.lstm_model - INFO - Training fold 3/5
+2025-08-22 15:48:51,025 - src.models.lstm_model - INFO - Training fold 4/5
+2025-08-22 15:51:12,290 - src.models.lstm_model - INFO - Training fold 5/5
+2025-08-22 15:52:00,475 - src.models.lstm_model - INFO - Cross-validation results: Loss=0.0660, Accuracy=0.7892
+2025-08-22 15:52:03,319 - absl - WARNING - You are saving your model as an HDF5 file via `model.save()` or `keras.saving.save_model(model)`. This file format is considered legacy. We recommend using instead the native Keras format, e.g. `model.save('my_model.keras')` or `keras.saving.save_model(model, 'my_model.keras')`. 
+2025-08-22 15:52:03,377 - src.models.lstm_model - INFO - Model saved to artifacts/models/lstm/XAUUSDm/model.h5
+2025-08-22 15:52:03,428 - src.data.database - INFO - Saved model artifact for lstm_XAUUSDm_20250822_155203 to legacy `models` table.
+2025-08-22 15:52:03,428 - src.deployment.training_pipeline - INFO - LSTM model trained and saved for XAUUSDm
+2025-08-22 15:52:03,643 - src.deployment.training_pipeline - INFO - Generating LSTM probabilities for XAUUSDm
+2025-08-22 15:52:03,748 - absl - WARNING - Compiled the loaded model, but the compiled metrics have yet to be built. `model.compile_metrics` will be empty until you train or evaluate the model.
+2025-08-22 15:52:03,755 - src.models.lstm_model - INFO - Model loaded from artifacts/models/lstm/XAUUSDm/model.h5
+2025-08-22 15:52:05,912 - src.deployment.training_pipeline - INFO - Generated 1952 LSTM probabilities for XAUUSDm
+2025-08-22 15:52:05,914 - src.deployment.training_pipeline - INFO - Training XGB model for XAUUSDm
+2025-08-22 15:53:25,232 - src.models.xgb_model - INFO - Hyperparameter optimization completed. Best AUC: 0.7244
+2025-08-22 15:53:25,241 - src.deployment.training_pipeline - ERROR - Training pipeline failed for XAUUSDm: XGBClassifier.fit() got an unexpected keyword argument 'callbacks'
+2025-08-22 15:53:25,430 - src.deployment.training_pipeline - INFO - Multi-symbol training completed: 0/1 successful
+2025-08-22 15:53:25,430 - __main__ - INFO - Model training completed: 0/1 symbols successful
+2025-08-22 15:55:26,524 - src.data.database - INFO - Database initialized successfully
+2025-08-22 15:55:26,525 - src.data.database - INFO - Database initialized successfully
+2025-08-22 15:55:26,525 - __main__ - INFO - Starting model training...
+2025-08-22 15:55:26,526 - src.deployment.training_pipeline - INFO - Starting multi-symbol training for 1 symbols
+2025-08-22 15:55:26,526 - src.deployment.training_pipeline - INFO - Training models for XAUUSDm (1/1)
+2025-08-22 15:55:26,526 - src.deployment.training_pipeline - INFO - Starting complete training pipeline for XAUUSDm
+2025-08-22 15:55:26,526 - src.deployment.training_pipeline - INFO - Preparing training data for XAUUSDm from 'data/m5_trading.db'.
+2025-08-22 15:56:15,018 - src.features.labeling - INFO - Removed overlapping events: 42167 -> 2012 samples
+2025-08-22 15:56:15,052 - src.deployment.training_pipeline - INFO - Prepared 2012 training samples for XAUUSDm
+2025-08-22 15:56:15,080 - src.deployment.training_pipeline - INFO - Training LSTM model for XAUUSDm
+2025-08-22 15:56:15,202 - src.models.lstm_model - INFO - Built LSTM model with 239043 parameters
+2025-08-22 15:56:15,721 - src.models.lstm_model - INFO - Training fold 1/5
+2025-08-22 15:58:30,503 - src.models.lstm_model - INFO - Training fold 2/5
+2025-08-22 16:02:14,919 - src.models.lstm_model - INFO - Training fold 3/5
+2025-08-22 16:03:08,379 - src.models.lstm_model - INFO - Training fold 4/5
+2025-08-22 16:04:01,911 - src.models.lstm_model - INFO - Training fold 5/5
+2025-08-22 16:04:49,494 - src.models.lstm_model - INFO - Cross-validation results: Loss=0.0692, Accuracy=0.7841
+2025-08-22 16:04:51,788 - absl - WARNING - You are saving your model as an HDF5 file via `model.save()` or `keras.saving.save_model(model)`. This file format is considered legacy. We recommend using instead the native Keras format, e.g. `model.save('my_model.keras')` or `keras.saving.save_model(model, 'my_model.keras')`. 
+2025-08-22 16:04:51,846 - src.models.lstm_model - INFO - Model saved to artifacts/models/lstm/XAUUSDm/model.h5
+2025-08-22 16:04:51,892 - src.data.database - INFO - Saved model artifact for lstm_XAUUSDm_20250822_160451 to legacy `models` table.
+2025-08-22 16:04:51,892 - src.deployment.training_pipeline - INFO - LSTM model trained and saved for XAUUSDm
+2025-08-22 16:04:52,149 - src.deployment.training_pipeline - INFO - Generating LSTM probabilities for XAUUSDm
+2025-08-22 16:04:52,239 - absl - WARNING - Compiled the loaded model, but the compiled metrics have yet to be built. `model.compile_metrics` will be empty until you train or evaluate the model.
+2025-08-22 16:04:52,244 - src.models.lstm_model - INFO - Model loaded from artifacts/models/lstm/XAUUSDm/model.h5
+2025-08-22 16:04:54,496 - src.deployment.training_pipeline - INFO - Generated 1952 LSTM probabilities for XAUUSDm
+2025-08-22 16:04:54,497 - src.deployment.training_pipeline - INFO - Training XGB model for XAUUSDm
+2025-08-22 16:05:51,581 - src.models.xgb_model - INFO - Hyperparameter optimization completed. Best AUC: 0.6243
+2025-08-22 16:05:51,589 - src.deployment.training_pipeline - ERROR - Training pipeline failed for XAUUSDm: XGBClassifier.fit() got an unexpected keyword argument 'callbacks'
+2025-08-22 16:05:51,777 - src.deployment.training_pipeline - INFO - Multi-symbol training completed: 0/1 successful
+2025-08-22 16:05:51,777 - __main__ - INFO - Model training completed: 0/1 symbols successful
+2025-08-22 16:06:41,751 - src.data.database - INFO - Database initialized successfully
+2025-08-22 16:06:41,752 - src.data.database - INFO - Database initialized successfully
+2025-08-22 16:06:41,752 - __main__ - INFO - Starting model training...
+2025-08-22 16:06:41,753 - src.deployment.training_pipeline - INFO - Starting multi-symbol training for 1 symbols
+2025-08-22 16:06:41,753 - src.deployment.training_pipeline - INFO - Training models for XAUUSDm (1/1)
+2025-08-22 16:06:41,753 - src.deployment.training_pipeline - INFO - Starting complete training pipeline for XAUUSDm
+2025-08-22 16:06:41,753 - src.deployment.training_pipeline - INFO - Preparing training data for XAUUSDm from 'data/m5_trading.db'.
+2025-08-22 16:07:30,538 - src.features.labeling - INFO - Removed overlapping events: 42167 -> 2012 samples
+2025-08-22 16:07:30,575 - src.deployment.training_pipeline - INFO - Prepared 2012 training samples for XAUUSDm
+2025-08-22 16:07:30,625 - src.deployment.training_pipeline - INFO - Training LSTM model for XAUUSDm
+2025-08-22 16:07:30,781 - src.models.lstm_model - INFO - Built LSTM model with 239043 parameters
+2025-08-22 16:07:31,266 - src.models.lstm_model - INFO - Training fold 1/5
+2025-08-22 16:12:22,783 - src.data.database - INFO - Database initialized successfully
+2025-08-22 16:12:22,784 - src.data.database - INFO - Database initialized successfully
+2025-08-22 16:12:22,784 - __main__ - INFO - Starting model training...
+2025-08-22 16:12:22,785 - src.deployment.training_pipeline - INFO - Starting multi-symbol training for 1 symbols
+2025-08-22 16:12:22,785 - src.deployment.training_pipeline - INFO - Training models for XAUUSDm (1/1)
+2025-08-22 16:12:22,786 - src.deployment.training_pipeline - INFO - Starting complete training pipeline for XAUUSDm
+2025-08-22 16:12:22,786 - src.deployment.training_pipeline - INFO - Preparing training data for XAUUSDm from 'data/m5_trading.db'.
+2025-08-22 16:13:11,514 - src.features.labeling - INFO - Removed overlapping events: 42167 -> 2012 samples
+2025-08-22 16:13:11,538 - src.deployment.training_pipeline - INFO - Prepared 2012 training samples for XAUUSDm
+2025-08-22 16:13:11,568 - src.deployment.training_pipeline - INFO - Training LSTM model for XAUUSDm
+2025-08-22 16:13:11,687 - src.models.lstm_model - INFO - Built LSTM model with 239043 parameters
+2025-08-22 16:13:12,351 - src.models.lstm_model - INFO - Training fold 1/5
+2025-08-22 16:15:33,722 - src.models.lstm_model - INFO - Training fold 2/5
+2025-08-22 16:16:26,368 - src.models.lstm_model - INFO - Training fold 3/5
+2025-08-22 16:17:25,994 - src.models.lstm_model - INFO - Training fold 4/5
+2025-08-22 16:18:20,311 - src.models.lstm_model - INFO - Training fold 5/5
+2025-08-22 16:19:15,514 - src.models.lstm_model - INFO - Cross-validation results: Loss=0.0723, Accuracy=0.7641
+2025-08-22 16:19:18,360 - absl - WARNING - You are saving your model as an HDF5 file via `model.save()` or `keras.saving.save_model(model)`. This file format is considered legacy. We recommend using instead the native Keras format, e.g. `model.save('my_model.keras')` or `keras.saving.save_model(model, 'my_model.keras')`. 
+2025-08-22 16:19:18,417 - src.models.lstm_model - INFO - Model saved to artifacts/models/lstm/XAUUSDm/model.h5
+2025-08-22 16:19:18,467 - src.data.database - INFO - Saved model artifact for lstm_XAUUSDm_20250822_161918 to legacy `models` table.
+2025-08-22 16:19:18,467 - src.deployment.training_pipeline - INFO - LSTM model trained and saved for XAUUSDm
+2025-08-22 16:19:18,687 - src.deployment.training_pipeline - INFO - Generating LSTM probabilities for XAUUSDm
+2025-08-22 16:19:18,807 - absl - WARNING - Compiled the loaded model, but the compiled metrics have yet to be built. `model.compile_metrics` will be empty until you train or evaluate the model.
+2025-08-22 16:19:18,812 - src.models.lstm_model - INFO - Model loaded from artifacts/models/lstm/XAUUSDm/model.h5
+2025-08-22 16:19:21,096 - src.deployment.training_pipeline - INFO - Generated 1952 LSTM probabilities for XAUUSDm
+2025-08-22 16:19:21,097 - src.deployment.training_pipeline - INFO - Training XGB model for XAUUSDm
+2025-08-22 16:20:17,254 - src.models.xgb_model - INFO - Hyperparameter optimization completed. Best AUC: 0.6387
+2025-08-22 16:20:17,262 - src.deployment.training_pipeline - ERROR - Training pipeline failed for XAUUSDm: XGBClassifier.fit() got an unexpected keyword argument 'callbacks'
+2025-08-22 16:20:17,447 - src.deployment.training_pipeline - INFO - Multi-symbol training completed: 0/1 successful
+2025-08-22 16:20:17,447 - __main__ - INFO - Model training completed: 0/1 symbols successful
+2025-08-22 16:23:18,954 - src.data.database - INFO - Database initialized successfully
+2025-08-22 16:23:18,955 - src.data.database - INFO - Database initialized successfully
+2025-08-22 16:23:18,955 - __main__ - INFO - Starting model training...
+2025-08-22 16:23:18,956 - src.deployment.training_pipeline - INFO - Starting multi-symbol training for 1 symbols
+2025-08-22 16:23:18,956 - src.deployment.training_pipeline - INFO - Training models for XAUUSDm (1/1)
+2025-08-22 16:23:18,957 - src.deployment.training_pipeline - INFO - Starting complete training pipeline for XAUUSDm
+2025-08-22 16:23:18,957 - src.deployment.training_pipeline - INFO - Preparing training data for XAUUSDm from 'data/m5_trading.db'.
+2025-08-22 16:27:42,950 - src.data.database - INFO - Database initialized successfully
+2025-08-22 16:27:42,951 - src.data.database - INFO - Database initialized successfully
+2025-08-22 16:27:42,951 - __main__ - INFO - Starting model training...
+2025-08-22 16:27:42,952 - src.deployment.training_pipeline - INFO - Starting multi-symbol training for 1 symbols
+2025-08-22 16:27:42,952 - src.deployment.training_pipeline - INFO - Training models for XAUUSDm (1/1)
+2025-08-22 16:27:42,952 - src.deployment.training_pipeline - INFO - Starting complete training pipeline for XAUUSDm
+2025-08-22 16:27:42,952 - src.deployment.training_pipeline - INFO - Preparing training data for XAUUSDm from 'data/m5_trading.db'.
+2025-08-22 16:28:33,685 - src.features.labeling - INFO - Removed overlapping events: 42167 -> 2012 samples
+2025-08-22 16:28:33,730 - src.deployment.training_pipeline - INFO - Prepared 2012 training samples for XAUUSDm
+2025-08-22 16:28:33,765 - src.deployment.training_pipeline - INFO - Training LSTM model for XAUUSDm
+2025-08-22 16:28:34,115 - src.models.lstm_model - INFO - Built LSTM model with 239043 parameters
+2025-08-22 16:28:34,627 - src.models.lstm_model - INFO - Training fold 1/5
+2025-08-22 16:31:04,468 - src.models.lstm_model - INFO - Training fold 2/5
+2025-08-22 16:32:49,084 - src.models.lstm_model - INFO - Training fold 3/5
+2025-08-22 16:33:51,399 - src.models.lstm_model - INFO - Training fold 4/5
+2025-08-22 16:34:41,743 - src.models.lstm_model - INFO - Training fold 5/5
+2025-08-22 16:35:31,348 - src.models.lstm_model - INFO - Cross-validation results: Loss=0.0678, Accuracy=0.7749
+2025-08-22 16:35:34,208 - absl - WARNING - You are saving your model as an HDF5 file via `model.save()` or `keras.saving.save_model(model)`. This file format is considered legacy. We recommend using instead the native Keras format, e.g. `model.save('my_model.keras')` or `keras.saving.save_model(model, 'my_model.keras')`. 
+2025-08-22 16:35:34,271 - src.models.lstm_model - INFO - Model saved to artifacts/models/lstm/XAUUSDm/model.h5
+2025-08-22 16:35:34,368 - src.data.database - INFO - Saved model artifact for lstm_XAUUSDm_20250822_163534 to legacy `models` table.
+2025-08-22 16:35:34,368 - src.deployment.training_pipeline - INFO - LSTM model trained and saved for XAUUSDm
+2025-08-22 16:35:34,595 - src.deployment.training_pipeline - INFO - Generating LSTM probabilities for XAUUSDm
+2025-08-22 16:35:34,683 - absl - WARNING - Compiled the loaded model, but the compiled metrics have yet to be built. `model.compile_metrics` will be empty until you train or evaluate the model.
+2025-08-22 16:35:34,688 - src.models.lstm_model - INFO - Model loaded from artifacts/models/lstm/XAUUSDm/model.h5
+2025-08-22 16:35:37,498 - src.deployment.training_pipeline - INFO - Generated 1952 LSTM probabilities for XAUUSDm
+2025-08-22 16:35:37,500 - src.deployment.training_pipeline - INFO - Training XGB model for XAUUSDm
+2025-08-22 16:36:51,529 - src.models.xgb_model - INFO - Hyperparameter optimization completed. Best AUC: 0.7482
+2025-08-22 16:36:51,538 - src.deployment.training_pipeline - ERROR - Training pipeline failed for XAUUSDm: XGBClassifier.fit() got an unexpected keyword argument 'early_stopping_rounds'
+2025-08-22 16:36:51,717 - src.deployment.training_pipeline - INFO - Multi-symbol training completed: 0/1 successful
+2025-08-22 16:36:51,718 - __main__ - INFO - Model training completed: 0/1 symbols successful
+2025-08-22 16:38:40,370 - src.data.database - INFO - Database initialized successfully
+2025-08-22 16:38:40,371 - src.data.database - INFO - Database initialized successfully
+2025-08-22 16:38:40,371 - __main__ - INFO - Starting model training...
+2025-08-22 16:38:40,372 - src.deployment.training_pipeline - INFO - Starting multi-symbol training for 1 symbols
+2025-08-22 16:38:40,372 - src.deployment.training_pipeline - INFO - Training models for XAUUSDm (1/1)
+2025-08-22 16:38:40,372 - src.deployment.training_pipeline - INFO - Starting complete training pipeline for XAUUSDm
+2025-08-22 16:38:40,372 - src.deployment.training_pipeline - INFO - Preparing training data for XAUUSDm from 'data/m5_trading.db'.
+2025-08-22 16:39:30,736 - src.features.labeling - INFO - Removed overlapping events: 42167 -> 2012 samples
+2025-08-22 16:39:30,760 - src.deployment.training_pipeline - INFO - Prepared 2012 training samples for XAUUSDm
+2025-08-22 16:39:30,789 - src.deployment.training_pipeline - INFO - Training LSTM model for XAUUSDm
+2025-08-22 16:39:30,914 - src.models.lstm_model - INFO - Built LSTM model with 239043 parameters
+2025-08-22 16:39:31,333 - src.models.lstm_model - INFO - Training fold 1/5
+2025-08-22 16:41:48,526 - src.models.lstm_model - INFO - Training fold 2/5
+2025-08-22 16:43:48,245 - src.models.lstm_model - INFO - Training fold 3/5
+2025-08-22 16:44:41,178 - src.models.lstm_model - INFO - Training fold 4/5
+2025-08-22 16:45:29,841 - src.models.lstm_model - INFO - Training fold 5/5
+2025-08-22 16:46:18,168 - src.models.lstm_model - INFO - Cross-validation results: Loss=0.0693, Accuracy=0.7723
+2025-08-22 16:46:21,040 - absl - WARNING - You are saving your model as an HDF5 file via `model.save()` or `keras.saving.save_model(model)`. This file format is considered legacy. We recommend using instead the native Keras format, e.g. `model.save('my_model.keras')` or `keras.saving.save_model(model, 'my_model.keras')`. 
+2025-08-22 16:46:21,111 - src.models.lstm_model - INFO - Model saved to artifacts/models/lstm/XAUUSDm/model.h5
+2025-08-22 16:46:21,166 - src.data.database - INFO - Saved model artifact for lstm_XAUUSDm_20250822_164621 to legacy `models` table.
+2025-08-22 16:46:21,166 - src.deployment.training_pipeline - INFO - LSTM model trained and saved for XAUUSDm
+2025-08-22 16:46:21,390 - src.deployment.training_pipeline - INFO - Generating LSTM probabilities for XAUUSDm
+2025-08-22 16:46:21,478 - absl - WARNING - Compiled the loaded model, but the compiled metrics have yet to be built. `model.compile_metrics` will be empty until you train or evaluate the model.
+2025-08-22 16:46:21,485 - src.models.lstm_model - INFO - Model loaded from artifacts/models/lstm/XAUUSDm/model.h5
+2025-08-22 16:46:23,749 - src.deployment.training_pipeline - INFO - Generated 1952 LSTM probabilities for XAUUSDm
+2025-08-22 16:46:23,750 - src.deployment.training_pipeline - INFO - Training XGB model for XAUUSDm
+2025-08-22 16:47:15,583 - src.models.xgb_model - INFO - Hyperparameter optimization completed. Best AUC: 0.6831
+2025-08-22 16:47:15,593 - src.deployment.training_pipeline - ERROR - Training pipeline failed for XAUUSDm: XGBClassifier.fit() got an unexpected keyword argument 'callbacks'
+2025-08-22 16:47:15,777 - src.deployment.training_pipeline - INFO - Multi-symbol training completed: 0/1 successful
+2025-08-22 16:47:15,777 - __main__ - INFO - Model training completed: 0/1 symbols successful
