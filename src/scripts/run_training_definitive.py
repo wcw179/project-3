@@ -154,7 +154,7 @@ def train_symbol(symbol: str):
 if __name__ == '__main__':
     # --- SYMBOLS TO TRAIN ---
     # Add the symbols you want to train here
-    symbols_to_train = ["EURUSD", "GBPUSD", "XAUUSDm"]
+    symbols_to_train = ["XAUUSDm"]
 
     max_workers = multiprocessing.cpu_count()
     logger.info(f"Starting multi-symbol training for: {symbols_to_train}")

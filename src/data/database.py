@@ -143,11 +143,26 @@ class TradingDatabase:
         with self.get_connection() as conn:
             for _, row in df_copy.iterrows():
                 try:
+                    # Ensure time is a string or native datetime
+                    time_val = row['time']
+                    try:
+                        import pandas as _pd
+                        if isinstance(time_val, _pd.Timestamp):
+                            time_val = time_val.to_pydatetime().isoformat()
+                    except Exception:
+                        pass
+                    if hasattr(time_val, 'isoformat') and not isinstance(time_val, str):
+                        try:
+                            time_val = time_val.isoformat()
+                        except Exception:
+                            time_val = str(time_val)
+                    else:
+                        time_val = str(time_val)
                     conn.execute(
                         """INSERT OR REPLACE INTO bars (symbol, time, open, high, low, close, volume)
                            VALUES (?, ?, ?, ?, ?, ?, ?)""",
                         (
-                            symbol, row['time'], float(row['open']), float(row['high']),
+                            symbol, time_val, float(row['open']), float(row['high']),
                             float(row['low']), float(row['close']), float(row.get('volume', 0.0))
                         )
                     )
