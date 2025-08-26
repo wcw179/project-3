@@ -123,16 +123,38 @@ def migrate_labels(src_conn: sqlite3.Connection, dst_db: TradingDatabase):
 def main():
     if not SRC_DB.exists():
         raise FileNotFoundError(f"Source DB not found: {SRC_DB}")
+
+    # Ensure a clean start by deleting the old DB
+    if DST_DB.exists():
+        logger.info(f"Deleting existing destination database: {DST_DB}")
+        try:
+            import os
+            os.remove(DST_DB)
+        except OSError as e:
+            logger.error(f"Error removing database file: {e}. Please ensure no other process is using it.")
+            return
+
     DST_DB.parent.mkdir(parents=True, exist_ok=True)
 
-    src_conn = sqlite3.connect(str(SRC_DB))
+    # Connect to source DB in read-only mode to avoid locking issues
+    try:
+        # Use URI for read-only mode
+        db_uri = f"file:{SRC_DB.as_posix()}?mode=ro"
+        logger.info(f"Connecting to source DB with URI: {db_uri}")
+        src_conn = sqlite3.connect(db_uri, uri=True)
+    except sqlite3.OperationalError:
+        # Fallback for older sqlite versions that may not support URI
+        logger.warning("Read-only URI connection failed, falling back to standard connection.")
+        src_conn = sqlite3.connect(str(SRC_DB))
+
     src_conn.row_factory = sqlite3.Row
 
     dst_db = TradingDatabase(str(DST_DB))
 
+    logger.info("Starting clean migration: ONLY migrating bars.")
     migrate_bars(src_conn, dst_db)
-    migrate_features(src_conn, dst_db)
-    migrate_labels(src_conn, dst_db)
+    # migrate_features(src_conn, dst_db) # Skipped: will be regenerated
+    # migrate_labels(src_conn, dst_db)   # Skipped: will be regenerated
 
     src_conn.close()
     logger.info(f"Migration complete. New DB: {DST_DB}")

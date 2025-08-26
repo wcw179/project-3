@@ -231,6 +231,50 @@ class TradingDatabase:
 
         return df
 
+    def insert_features_batch(self, data: List[Tuple[str, str, str, str]]) -> int:
+        """Batch insert feature vectors. Expects list of (symbol, time_iso_string, feature_set, features_json_string)"""
+        if not data:
+            return 0
+        with self.get_connection() as conn:
+            try:
+                conn.executemany("""
+                    INSERT OR REPLACE INTO features
+                    (symbol, time, feature_set, features)
+                    VALUES (?, ?, ?, ?)
+                """, data)
+                conn.commit()
+                return len(data)
+            except Exception as e:
+                logger.error(f"Failed to batch insert features: {e}")
+                return 0
+
+        with self.get_connection() as conn:
+            df = pd.read_sql_query(query, conn, params=params, parse_dates=['time'])
+            if not df.empty:
+                # Parse JSON features
+                df['features_parsed'] = df['features'].apply(json.loads)
+                df.rename(columns={'time': 'timestamp'}, inplace=True)
+                df.set_index('timestamp', inplace=True)
+
+        return df
+    def insert_labels_batch(self, data: List[Tuple]) -> int:
+        """Batch insert labels. Expects list of (symbol, time_iso_string, ...)."""
+        if not data:
+            return 0
+        with self.get_connection() as conn:
+            try:
+                conn.executemany("""
+                    INSERT OR REPLACE INTO labels
+                    (symbol, time, label_type, rr_preset, label_value, barrier_meta, sample_weight)
+                    VALUES (?, ?, ?, ?, ?, ?, ?)
+                """, data)
+                conn.commit()
+                return len(data)
+            except Exception as e:
+                logger.error(f"Failed to batch insert labels: {e}")
+                return 0
+
+
     def insert_labels(self, symbol: str, time: datetime, label_type: str,
                       rr_preset: str, label_value: int, barrier_meta: Optional[Dict] = None,
                       sample_weight: Optional[float] = None) -> bool:
