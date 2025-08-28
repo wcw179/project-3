@@ -46,7 +46,8 @@ class XGBMFERegressor:
             'reg_lambda': 1.0,
             'random_state': random_state,
             'n_jobs': -1,
-            'verbosity': 0
+            'verbosity': 0,
+            'tree_method': 'hist'
         }
     
     def prepare_features(self, X: pd.DataFrame, fit_scaler: bool = False) -> np.ndarray:
@@ -85,7 +86,8 @@ class XGBMFERegressor:
                 'reg_lambda': trial.suggest_float('reg_lambda', 0, 2.0),
                 'random_state': self.random_state,
                 'n_jobs': -1,
-                'verbosity': 0
+                'verbosity': 0,
+                'tree_method': 'hist'
             }
             
             # Custom cross-validation with purged splits
@@ -95,11 +97,11 @@ class XGBMFERegressor:
                 y_train, y_val = y[train_idx], y[val_idx]
                 
                 model = xgb.XGBRegressor(**params)
-                model.fit(X_train, y_train, 
-                         eval_set=[(X_val, y_val)],
-                         early_stopping_rounds=50,
-                         verbose=False)
-                
+                model.fit(
+                    X_train, y_train,
+                    eval_set=[(X_val, y_val)]
+                )
+
                 val_pred = model.predict(X_val)
                 rmse = np.sqrt(mean_squared_error(y_val, val_pred))
                 cv_scores.append(rmse)
@@ -117,7 +119,8 @@ class XGBMFERegressor:
             'eval_metric': 'rmse',
             'random_state': self.random_state,
             'n_jobs': -1,
-            'verbosity': 0
+            'verbosity': 0,
+            'tree_method': 'hist'
         })
         
         self.params = best_params
@@ -160,11 +163,11 @@ class XGBMFERegressor:
             
             # Train fold model
             fold_model = xgb.XGBRegressor(**self.params)
-            fold_model.fit(X_train, y_train,
-                          eval_set=[(X_val, y_val)],
-                          early_stopping_rounds=50,
-                          verbose=False)
-            
+            fold_model.fit(
+                X_train, y_train,
+                eval_set=[(X_val, y_val)]
+            )
+
             # Evaluate
             val_pred = fold_model.predict(X_val)
             
@@ -185,11 +188,11 @@ class XGBMFERegressor:
         y_val_final = y[split_idx:]
         
         self.model = xgb.XGBRegressor(**self.params)
-        self.model.fit(X_train_final, y_train_final,
-                      eval_set=[(X_val_final, y_val_final)],
-                      early_stopping_rounds=50,
-                      verbose=False)
-        
+        self.model.fit(
+            X_train_final, y_train_final,
+            eval_set=[(X_val_final, y_val_final)]
+        )
+
         self.is_fitted = True
         
         # Final validation metrics

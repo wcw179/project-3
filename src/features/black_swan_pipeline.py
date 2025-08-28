@@ -192,6 +192,8 @@ class BlackSwanFeaturePipeline:
         # Add symbol identifier
         features['symbol'] = symbol
 
+        # Clean up any infinite values that can occur from divisions
+        features.replace([np.inf, -np.inf], 0, inplace=True)
         return features.fillna(0)
     
     def generate_lstm_features(self, df: pd.DataFrame, symbol: str) -> pd.DataFrame:
@@ -235,10 +237,12 @@ class BlackSwanFeaturePipeline:
             features['volume_normalized'] = (df['volume'] / vol_ma20).fillna(1.0)
         else:
             features['volume_normalized'] = 1.0
-        
+
         # Add symbol identifier
         features['symbol'] = symbol
-        
+
+        # Clean up any infinite values that can occur from divisions
+        features.replace([np.inf, -np.inf], 0, inplace=True)
         return features.fillna(0)
     
     def prepare_lstm_sequences(self, features: pd.DataFrame, labels: Optional[pd.Series] = None) -> Tuple[np.ndarray, Optional[np.ndarray]]:

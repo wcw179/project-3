@@ -56,7 +56,7 @@ class PurgedTimeSeriesSplit:
             if len(train_indices) > 0 and len(test_indices) > 0:
                 yield train_indices, test_indices
 
-def load_training_data(db_path: str, symbol: str, limit: int = 100000):
+def load_training_data(db_path: str, symbol: str, limit: int = 200000):
     """Load and prepare training data for XGB MFE regressor"""
     logger.info(f"Loading training data for {symbol}")
     
@@ -84,7 +84,7 @@ def main():
     ap = argparse.ArgumentParser()
     ap.add_argument('--db', type=str, default=str(DEFAULT_DB))
     ap.add_argument('--symbol', type=str, required=True, help='Symbol to train on')
-    ap.add_argument('--limit', type=int, default=100000, help='Max bars to load')
+    ap.add_argument('--limit', type=int, default=200000, help='Max bars to load')
     ap.add_argument('--cv-folds', type=int, default=5, help='Cross-validation folds')
     ap.add_argument('--embargo-bars', type=int, default=3, help='Embargo bars for purged CV')
     ap.add_argument('--optimize-hyperparams', action='store_true', help='Run hyperparameter optimization')
@@ -118,21 +118,42 @@ def main():
         logger.error("Label validation failed")
         return
     
-    # Combine long and short direction labels
-    combined_labels = pd.concat([
-        labels_dict['xgb_long'],
-        labels_dict['xgb_short']
-    ]).sort_index()
-    
-    # Align features and labels
-    common_idx = xgb_features.index.intersection(combined_labels.index)
-    X = xgb_features.loc[common_idx]
-    y = combined_labels.loc[common_idx]['mfe_target']
-    
-    # Remove non-numeric columns for training
-    feature_cols = [col for col in X.columns if col != 'symbol']
-    X_numeric = X[feature_cols]
-    
+    # Build training set with direction-aware duplication and alignment
+    X_parts = []
+    y_parts = []
+    for dir_key, dir_flag in [('xgb_long', 1), ('xgb_short', -1)]:
+        lbl_df = labels_dict.get(dir_key, pd.DataFrame())
+        if lbl_df.empty:
+            logger.warning(f"No labels for {dir_key}, skipping")
+            continue
+        common_idx = xgb_features.index.intersection(lbl_df.index)
+        X_dir = xgb_features.loc[common_idx].copy()
+        # Remove non-numeric/non-feature column and add direction flag
+        feature_cols = [c for c in X_dir.columns if c != 'symbol']
+        X_dir = X_dir[feature_cols]
+        X_dir['direction_flag'] = dir_flag
+        y_dir = lbl_df.loc[common_idx]['mfe_target']
+        # Keep index to allow later sorting/consistency
+        X_dir.index = common_idx
+        y_dir.index = common_idx
+        X_parts.append(X_dir)
+        y_parts.append(y_dir)
+
+    if not X_parts:
+        logger.error("No training data assembled. Exiting.")
+        return
+
+    X_all = pd.concat(X_parts).sort_index()
+    y_all = pd.concat(y_parts).sort_index()
+
+    # Ensure aligned order
+    common_idx2 = X_all.index.intersection(y_all.index)
+    X_all = X_all.loc[common_idx2]
+    y_all = y_all.loc[common_idx2]
+
+    X_numeric = X_all
+    y = y_all
+
     logger.info(f"Training data shape: X={X_numeric.shape}, y={y.shape}")
     logger.info(f"MFE target statistics: mean={y.mean():.3f}, std={y.std():.3f}, max={y.max():.3f}")
     
