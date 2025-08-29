@@ -117,7 +117,11 @@ def main():
     if not labeling_pipeline.validate_labels(labels_dict):
         logger.error("Label validation failed")
         return
+<<<<<<< HEAD
 
+=======
+    
+>>>>>>> ba74014bc27d7d2a54cd990e89509a76b3a012d5
     # Build training set with direction-aware duplication and alignment
     X_parts = []
     y_parts = []
