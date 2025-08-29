@@ -1,0 +1,116 @@
+{
+  "metrics": {
+    "validation_like": {
+      "cv_rmse_mean": 6.487785346458011,
+      "cv_rmse_std": 0.35342888018391366,
+      "cv_r2_mean": 0.168783115159601,
+      "cv_r2_std": 0.042892550374033354,
+      "cv_mae_mean": 4.479087122225265,
+      "cv_mae_std": 0.292048283550292,
+      "final_rmse": 6.028742624552673,
+      "final_r2": 0.08967251352618244,
+      "final_mae": 4.143068097398701
+    }
+  },
+  "n_train": 0,
+  "n_val": 0,
+  "n_features": 72,
+  "feature_names_available": true,
+  "num_trees": 541,
+  "booster_attrs": {
+    "scikit_learn": "{\"_estimator_type\": \"regressor\"}"
+  },
+  "feature_importance_top_gain": [
+    [
+      "is_ny_session",
+      194444.078125
+    ],
+    [
+      "is_overlap_session",
+      40317.265625
+    ],
+    [
+      "hour_of_day",
+      23539.97265625
+    ],
+    [
+      "returns_20bar_std",
+      15672.1640625
+    ],
+    [
+      "atr_close_ratio",
+      15633.2314453125
+    ],
+    [
+      "spread_proxy",
+      13257.07421875
+    ],
+    [
+      "volume_regime",
+      4261.947265625
+    ],
+    [
+      "day_of_week",
+      4016.907470703125
+    ],
+    [
+      "is_london_session",
+      3903.03662109375
+    ],
+    [
+      "ema20_above_50",
+      3627.1826171875
+    ],
+    [
+      "ema50_slope",
+      2779.493408203125
+    ],
+    [
+      "macd_signal",
+      2290.359375
+    ],
+    [
+      "direction_flag",
+      2248.367431640625
+    ],
+    [
+      "hl_range_pct",
+      2217.83642578125
+    ],
+    [
+      "ema50_ratio",
+      2179.025634765625
+    ],
+    [
+      "ema_bullish_alignment",
+      2117.4482421875
+    ],
+    [
+      "ema50_above_200",
+      2055.403564453125
+    ],
+    [
+      "ema200_ratio",
+      1882.9921875
+    ],
+    [
+      "obv_slope",
+      1874.425537109375
+    ],
+    [
+      "bb_width_pct",
+      1780.3203125
+    ]
+  ],
+  "training_results_present": true,
+  "shap": {
+    "available": false,
+    "reason": "no data"
+  },
+  "created_plots": [
+    "feature_importance_cover.png",
+    "feature_importance_gain.png",
+    "feature_importance_weight.png"
+  ],
+  "output_dir": "C:\\Users\\wcw17\\Pictures\\project 2\\Project-3\\project-3\\artifacts\\analysis\\EURUSDm"
+}
